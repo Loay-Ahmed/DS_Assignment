@@ -1,6 +1,6 @@
 #include "Student.h"
 
-Student::Student(string id, string name, double gpa) {
+Student::Student(string name, string id, double gpa) {
     this->id = id;
     this->name = name;
     this->gpa = gpa;

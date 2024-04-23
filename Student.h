@@ -10,7 +10,7 @@ class Student {
     string name;
     double gpa;
 public:
-    Student(string id, string name, double gpa);
+    Student(string name, string id, double gpa);
 
     bool operator<(Student &s2);
 };
