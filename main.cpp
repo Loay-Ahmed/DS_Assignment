@@ -1,3 +1,7 @@
-//
-// Created by HP USER on 4/23/2024.
-//
+#include "iostream"
+
+using namespace std;
+
+int main() {
+    return 0;
+}
