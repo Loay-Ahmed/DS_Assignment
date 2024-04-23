@@ -1,12 +1,12 @@
-#include "iostream"
-#include "fstream"
-
+#include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
-string readFromFile(basic_ifstream<char> &file);
+string readFromFile(basic_ifstream<char>& file);
 
 int main() {
-    ifstream file("D:\\Gam3a\\DataStructures\\DS_Assignment\\students.txt");
+    ifstream file("G:student.txt");
     if (!file.is_open()) {
         cerr << "Can't open the file\n";
         return -1;
@@ -15,12 +15,13 @@ int main() {
     return 0;
 }
 
-string readFromFile(basic_ifstream<char> &file) {
+string readFromFile(basic_ifstream<char>& file) {
     string line, name, id;
     int n;
     double gpa;
     (file >> n) ? cout << n << endl : cout << "Can't read double";
     for (int i = 0; i < n; i++) {
+        file.ignore();
         getline(file, name);
         cout << name << " ";
         getline(file, id);
@@ -30,3 +31,4 @@ string readFromFile(basic_ifstream<char> &file) {
     }
     return "";
 }
+
