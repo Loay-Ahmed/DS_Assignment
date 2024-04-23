@@ -2,7 +2,7 @@
 ---
 ##Todo
 
-Fuck me Daddy
+Fuck me Daddy (عيب كده يا بيدو)
 
 1. Implement the student class with its constructor. [ Done ]
 
