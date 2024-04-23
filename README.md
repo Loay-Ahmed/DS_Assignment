@@ -2,13 +2,13 @@
 ---
 ##Todo
 
-Fuck me Daddy (عيب كده يا بيدو)
+عيب كده يا مسيو😂
 
 1. Implement the student class with its constructor. [ Done ]
 
 2. Overload the operator < such that it compares the names of two student objects.
 
-3. Read student objects from a file named students.txt
+3. Read student objects from a file named students.txt [ Error ]
 
 4. Implement Insertion [ Done ], Selection [ Done ], Bubble [ Done ], Shell, Merge, Quick Sort algorithms.
 
