@@ -2,6 +2,8 @@
 ---
 ##Todo
 
+Fuck me Daddy (عيب كده يا بيدو)
+
 1. Implement the student class with its constructor. [ Done ]
 
 2. Overload the operator < such that it compares the names of two student objects.
