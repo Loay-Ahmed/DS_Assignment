@@ -6,7 +6,7 @@ using namespace std;
 
 // Quick Sort functions
 template<typename T>
-int partition(T &arr, int low, int high) {
+int partition(T *arr, int low, int high) {
     T pivot = arr[high];
     int i = low - 1;
     for (int j = low; j <= high - 1; ++j) {
@@ -20,7 +20,7 @@ int partition(T &arr, int low, int high) {
 }
 
 template<typename T>
-void quickSort(T &arr, int low, int high) {
+void quickSort(T *arr, int low, int high) {
     if (low < high) {
         int pi = partition(arr, low, high);
         quickSort(arr, low, pi - 1);

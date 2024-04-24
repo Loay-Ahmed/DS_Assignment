@@ -11,7 +11,9 @@ class Student {
     double gpa;
 public:
     explicit Student(string Name="", string ID="", double GPA=0);
-
+    string Name() const;
+    string ID() const;
+    double GPA() const;
     bool operator<(Student &s2);
 };
 
