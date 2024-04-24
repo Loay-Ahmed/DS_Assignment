@@ -1,10 +1,8 @@
 #include "Student.h"
 
-Student::Student(string name, string id, double gpa) {
-    this->id = id;
-    this->name = name;
-    this->gpa = gpa;
-}
+#include <utility>
+
+Student::Student(string Name, string ID, double GPA) : name(std::move(Name)), id(std::move(ID)), gpa(GPA) {}
 
 bool Student::operator<(Student &s2) {
     return false;

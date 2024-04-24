@@ -31,5 +31,5 @@ class singelLinkedList
         int linkedListSize();
         void clear();
         void print();
-]};
+};
 
