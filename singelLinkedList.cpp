@@ -202,8 +202,8 @@ void singelLinkedList::clear() {
         current = current->next;
         delete tmp;
     }
-    head = nullptr;
-    tail = nullptr;
+    head = NULL;
+    tail = NULL;
 }
 
 void singelLinkedList::print() {

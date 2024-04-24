@@ -64,8 +64,8 @@ void DoublyLinkedList::clear() {
         current = current->next;
         delete tmp;
     }
-    head = nullptr;
-    tail = nullptr;
+    head = NULL;
+    tail = NULL;
 }
 
 void DoublyLinkedList::print() {
