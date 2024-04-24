@@ -155,7 +155,7 @@ bool singelLinkedList::isExist(int element) {
 bool singelLinkedList::isItemAtEqual(int element, int index) {
     Node *current = head;
     int count = 1;
-    if (length > 1){
+    if (length > 1) {
         while (current->next != NULL) {
             if (index == count && current->val == element) {
                 return true;
@@ -177,13 +177,12 @@ void singelLinkedList::swap(int firstItemIdx, int secondItemIdx) {
         for (int i = 0; i < secondItemIdx; i++) {
             current2 = current2->next;
         }
-        int* tmp = new int(current1->val);
+        int *tmp = new int(current1->val);
         current1->val = current2->val;
         current2->val = *tmp;
         delete tmp;
         tmp = nullptr;
-    }
-    else {
+    } else {
         cout << "Can't swap, list is less than 2";
     }
 }
@@ -203,12 +202,14 @@ void singelLinkedList::clear() {
         current = current->next;
         delete tmp;
     }
+    head = nullptr;
+    tail = nullptr;
 }
 
 void singelLinkedList::print() {
     Node *current = head;
-    while(current != NULL) {
-        cout << current->val << "";
+    while (current != NULL) {
+        cout << current->val << " ";
         current = current->next;
     }
     cout << endl;
