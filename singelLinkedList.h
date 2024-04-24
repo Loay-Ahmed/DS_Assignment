@@ -14,6 +14,7 @@ class singelLinkedList
 	int length;
 
 	public:
+        singelLinkedList();
 		void insertAtHead(int element) ;
 		void insertAtTail(int element);
 		void insertAt(int element,int index);
@@ -22,6 +23,5 @@ class singelLinkedList
 		void removeAt(int index);
 		int retrieveAt(int index);
 		void replaceAt(int element, int index);
-
 };
 
