@@ -10,11 +10,15 @@ class Student {
     string name;
     double gpa;
 public:
-    explicit Student(string Name="", string ID="", double GPA=0);
+    explicit Student(string Name = "", string ID = "", double GPA = 0);
+
     string Name() const;
+
     string ID() const;
+
     double GPA() const;
-    bool operator<(Student &s2);
+
+    bool operator<(const Student &other) const;
 };
 
 

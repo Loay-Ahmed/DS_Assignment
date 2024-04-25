@@ -4,7 +4,7 @@
 
 Student::Student(string Name, string ID, double GPA) : name(std::move(Name)), id(std::move(ID)), gpa(GPA) {}
 
-bool Student::operator<(Student &s2) {
+bool Student::operator<(const Student &other) const {
     return false;
 }
 
