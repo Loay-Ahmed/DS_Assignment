@@ -7,7 +7,7 @@
 ---
 ```
 [ 2 ] Overload the operator < such that it compares the
-      names of two student objects. <span style="color: green;">[ Done ]</span>
+      names of two student objects. [ Done ]
 ```
 ---
 ```
