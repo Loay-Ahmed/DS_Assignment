@@ -20,7 +20,7 @@ int partition(T *arr, int low, int high) {
 }
 
 template<typename T>
-void quickSort(T *arr, int low, int high) {
+void quickSort(T arr[], int low, int high) {
     if (low < high) {
         int pi = partition(arr, low, high);
         quickSort(arr, low, pi - 1);

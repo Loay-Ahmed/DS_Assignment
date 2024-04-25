@@ -4,6 +4,11 @@
 #include <vector>
 #include "Student.h"
 #include "chrono"
+#include "quickSort.cpp"
+#include "insertionSort.cpp"
+#include "ShellSort.cpp"
+#include "BubbleSort.cpp"
+#include "selection_sort.cpp"
 
 using namespace chrono;
 using namespace std;
@@ -26,9 +31,9 @@ pair<int, Student *> readFromFile(basic_ifstream<char> &file) {
 
 // Function to measure running time of sorting algorithms
 template<typename T>
-long long measureTime(void (*sortingAlgorithm)(vector<T> &), vector<T> &arr) {
+long long measureTime(void (*sortingAlgorithm)(Student[], int, int), T arr[], int size) {
     auto start = high_resolution_clock::now();
-    sortingAlgorithm(arr);
+    sortingAlgorithm(arr, 0, size);
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(stop - start);
     return duration.count();
@@ -72,13 +77,13 @@ int main() {
         if (algorithm == "Quick Sort") {
             // Sort by name
             studentsByName = students;
-            timeTaken = measureTime(&(quickSort(students)), studentsByName);
-            writeToFile("SortedByName.txt", algorithm, studentsByName, , timeTaken);
+            timeTaken = measureTime(BubbleSort, studentsByName, size);
+            writeToFile("SortedByName.txt", algorithm, studentsByName, size, timeTaken);
 
             // Sort by GPA
             Student *studentsByGPA = students;
-            timeTaken = measureTime((quickSort(students)), studentsByGPA);
-            writeToFile("SortedByGPA.txt", algorithm, studentsByGPA, n, timeTaken);
+            timeTaken = measureTime(InsertionSort, studentsByGPA, size);
+            writeToFile("SortedByGPA.txt", algorithm, studentsByGPA, size, timeTaken);
         } else {
             // Implement and call other sorting algorithms
             // You can reuse the existing code structure for other sorting algorithms

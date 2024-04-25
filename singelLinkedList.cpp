@@ -154,9 +154,9 @@ bool singelLinkedList::isExist(int element) {
 
 bool singelLinkedList::isItemAtEqual(int element, int index) {
     Node *current = head;
-    int count = 1;
-    if (length > 1) {
-        while (current->next != NULL) {
+    int count = -1;
+    if (length > 0) {
+        while (current != NULL) {
             if (index == count && current->val == element) {
                 return true;
             }
