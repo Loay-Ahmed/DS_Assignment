@@ -3,47 +3,35 @@
 using namespace std;
 
 
-class DoublyLinkedList {
-    struct Node {
-        int val;
-        Node *next;
-        Node *prev;
-    };
-    Node *head, *tail;
-    int length;
+template<typename T>
+
+class DoublyLinkedList
+{
+
+	struct dNode
+	{
+		T val;
+		dNode* next;
+		dNode* prev;
+	};
+	dNode* head, * tail;
+	int length;
 
 public:
-    //Not Tested Yet
-    bool isExist(int element);
-
-    bool isItemAtEqual(int element, int index);
-
-    void swap(int firstItemIdx, int secondItemIdx);
-
-    bool isEmpty();
-
-    int linkedListSize();
-
-    void clear();
-
-    void print();
-
-    //Not Implemented Yet
-    DoublyLinkedList();
-
-    void insertAtHead(int element);
-
-    void insertAtTail(int element);
-
-    void insertAt(int element, int index);
-
-    void removeAtHead();
-
-    void removeAtTail();
-
-    void removeAt(int index);
-
-    int retrieveAt(int index);
-
-    void replaceAt(int element, int index);
+	bool isExist(T element);
+	bool isItemAtEqual(T element, int index);
+	void swap(int firstItemIdx, int secondItemIdx);
+	bool isEmpty();
+	int linkedListSize();
+	void clear();
+	void print();
+	DoublyLinkedList();
+	void insertAtHead(T element);
+	void insertAtTail(T element);
+	void insertAt(T element, int index);
+	void removeAtHead();
+	void removeAtTail();
+	void removeAt(int index);
+	T retrieveAt(int index);
+	void replaceAt(T element, int index);
 };
