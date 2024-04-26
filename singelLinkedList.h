@@ -1,33 +1,37 @@
 #pragma once
 
 using namespace std;
+
+template<typename T>
 class singelLinkedList
 {
-    struct Node
-{
-	int val;
-	Node* next;
-};
-	Node* head, * tail;
+
+	struct sNode
+	{
+		int val;
+		sNode* next;
+	};
+
+
+	sNode* head, * tail;
 	int length;
 
 	public:
-    //Not Tested Yet
-        singelLinkedList();
-		void insertAtHead(int element) ;
-		void insertAtTail(int element);
-		void insertAt(int element,int index);
+		singelLinkedList();
+		void insertAtHead(T element) ;
+		void insertAtTail(T element);
+		void insertAt(T element,int index);
 		void removeAtHead();
 		void removeAtTail();
 		void removeAt(int index);
-		int retrieveAt(int index);
-		void replaceAt(int element, int index);
-        bool isExist(int element);
-        bool isItemAtEqual(int element, int index);
-        void swap(int firstItemIdx, int secondItemIdx);
-        bool isEmpty();
-        int linkedListSize();
-        void clear();
-        void print();
+		T retrieveAt(int index);
+		void replaceAt(T element, int index);
+		bool isExist(T element);
+		bool isItemAtEqual(T element, int index);
+		void swap(int firstItemIdx, int secondItemIdx);
+		bool isEmpty();
+		int linkedListSize();
+		void clear();
+		void print();
 };
 
