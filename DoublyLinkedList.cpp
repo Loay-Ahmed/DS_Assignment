@@ -1,8 +1,10 @@
 #include "DoublyLinkedList.h"
 #include<iostream>
 
-bool DoublyLinkedList::isExist(int element) {
-    Node* current = head;
+
+template<typename T>
+bool DoublyLinkedList<T>::isExist(T element) {
+    dNode* current = head;
     if (length > 0) {
         while (current->next != NULL) {
             if (current->val == element) {
@@ -14,63 +16,90 @@ bool DoublyLinkedList::isExist(int element) {
     return false;
 }
 
-bool DoublyLinkedList::isItemAtEqual(int element, int index) {
-    Node* current = head;
-    int count = -1;
+
+
+template<typename T>
+bool DoublyLinkedList<T>::isItemAtEqual(T element, int index) {
+    dNode* current = head;
     if (length > 0) {
         while (current != NULL) {
-            if (index == count && current->val == element) {
+            if (current->val == element) {
                 return true;
             }
             current = current->next;
-            count++;
         }
     }
     return false;
 }
 
-void DoublyLinkedList::swap(int firstItemIdx, int secondItemIdx) {
+
+
+template<typename T>
+void DoublyLinkedList<T>::swap(int firstItemIdx, int secondItemIdx) {
     if (length > 1) {
-        Node* current1 = head;
-        Node* current2 = head;
+        dNode* current1 = head;
+        dNode* prev1 = NULL;
+        dNode* nxt1 = current1->next;
+        dNode* current2 = head;
+        dNode* prev2 = NULL;
+        dNode* nxt2 = current2->next;
         for (int i = 0; i < firstItemIdx; i++) {
+            prev1 = current1;
             current1 = current1->next;
+            nxt1= current1->next;
         }
         for (int i = 0; i < secondItemIdx; i++) {
+            prev2 = current2;
             current2 = current2->next;
+            nxt2 = current2->next;
         }
-        int* tmp = new int(current1->val);
-        current1->val = current2->val;
-        current2->val = *tmp;
-        delete tmp;
-        tmp = nullptr;
+
+        prev1->next = current2;
+        prev2->next = current1;
+
+        current1->prev = prev2;
+        current2->prev = prev1;
+
+        current2->next = nxt1;
+        current1->next = nxt2;
+
+        nxt1->prev = current2;
+        nxt2->prev = current1;
+
     }
     else {
         cout << "Can't swap, list is less than 2";
     }
 }
 
-bool DoublyLinkedList::isEmpty() {
+
+
+template<typename T>
+bool DoublyLinkedList<T>::isEmpty() {
     return (length == 0 && head == NULL && tail == NULL);
 }
 
-int DoublyLinkedList::linkedListSize() {
+
+
+template<typename T>
+int DoublyLinkedList<T>::linkedListSize() {
     return length;
 }
 
-void DoublyLinkedList::clear() {
-    Node* current = head;
-    while (current != NULL) {
-        Node* tmp = current;
-        current = current->next;
-        delete tmp;
+
+
+template<typename T>
+void DoublyLinkedList<T>::clear() {
+    while (tail != NULL) {
+        removeAtHead();
     }
-    head = nullptr;
-    tail = nullptr;
 }
 
-void DoublyLinkedList::print() {
-    Node* current = head;
+
+
+template<typename T>
+void DoublyLinkedList<T>::print() {
+    dNode* current = head;
     while (current != NULL) {
         cout << current->val << " ";
         current = current->next;
@@ -78,14 +107,18 @@ void DoublyLinkedList::print() {
     cout << endl;
 }
 
-DoublyLinkedList::DoublyLinkedList() {
+
+
+template<typename T>
+DoublyLinkedList<T>::DoublyLinkedList() {
     head = tail = NULL;
     length = 0;
 }
 
 
-void DoublyLinkedList :: insertAtHead(int element) {
-    Node* newNode = new Node;
+template<typename T>
+void DoublyLinkedList<T> :: insertAtHead(T element) {
+    dNode* newNode = new dNode;
     newNode->val = element;
     if (length == 0) {
         newNode->next = newNode->prev = NULL;
@@ -101,8 +134,10 @@ void DoublyLinkedList :: insertAtHead(int element) {
 }
 
 
-void DoublyLinkedList::insertAtTail(int element) {
-    Node* newNode = new Node;
+
+template<typename T>
+void DoublyLinkedList<T>::insertAtTail(T element) {
+    dNode* newNode = new dNode;
     newNode->val = element;
     if (length == 0) {
         newNode->next = newNode->prev = NULL;
@@ -118,7 +153,9 @@ void DoublyLinkedList::insertAtTail(int element) {
 }
 
 
-void DoublyLinkedList::insertAt(int element, int index) {
+
+template<typename T>
+void DoublyLinkedList<T>::insertAt(T element, int index) {
     if (index == 0) {
         insertAtHead(element);
     }
@@ -126,9 +163,9 @@ void DoublyLinkedList::insertAt(int element, int index) {
         insertAtTail(element);
     }
     else {
-        Node* newNode = new Node;
+        dNode* newNode = new dNode;
         newNode->val = element;
-        Node* current = head;
+        dNode* current = head;
         for (int i = 1; i < index; i++) {
             current = current->next;
         }
@@ -141,7 +178,9 @@ void DoublyLinkedList::insertAt(int element, int index) {
 }
 
 
-void DoublyLinkedList::removeAtHead() {
+
+template<typename T>
+void DoublyLinkedList<T>::removeAtHead() {
     if (length == 0) {
         cout << "the list is already empty.";
     }
@@ -151,7 +190,7 @@ void DoublyLinkedList::removeAtHead() {
         length--;
     }
     else {
-        Node* current = head;
+        dNode* current = head;
         head = head->next;
         delete current;
         length--;
@@ -159,7 +198,9 @@ void DoublyLinkedList::removeAtHead() {
 }
 
 
-void DoublyLinkedList::removeAtTail() {
+
+template<typename T>
+void DoublyLinkedList<T>::removeAtTail() {
     if (length == 0) {
         cout << "the list is already empty.";
     }
@@ -169,7 +210,7 @@ void DoublyLinkedList::removeAtTail() {
         length--;
     }
     else {
-        Node* current = head;
+        dNode* current = head;
         while (current->next != tail) {
             current = current->next;
         }
@@ -182,27 +223,38 @@ void DoublyLinkedList::removeAtTail() {
 }
 
 
-void DoublyLinkedList::removeAt(int index) {
-    if (index == 0) {
+
+template<typename T>
+void DoublyLinkedList<T>::removeAt(int index) {
+    if (index < 0 || index >= length) {
+        cout << "Out Of Range" << endl;
+        return;
+    }
+    else if (index == 0) {
         removeAtHead();
     }
     else if (index == length - 1) {
         removeAtTail();
     }
     else {
-        Node* current = head;
-        for (int i = 0; i < index; i++) {
+        dNode* current = head->next;
+        dNode* previos = head;
+        for (int i = 1; i < index; i++) {
             current = current->next;
+            previos = previos->next;
         }
-        current->prev->next = current->next;
-        current->next->prev = current->prev;
+        previos->next = current->next;
+        previos = current->next;
+        previos->prev = current->prev;
         delete current;
         length--;
     }
 }
 
 
-int DoublyLinkedList::retrieveAt(int index) {
+
+template<typename T>
+T DoublyLinkedList<T>::retrieveAt(int index) {
     if (index == 0) {
         return (head->val);
     }
@@ -210,7 +262,7 @@ int DoublyLinkedList::retrieveAt(int index) {
         return (tail->val);
     }
     else {
-        Node* current = head;
+        dNode* current = head;
         for (int i = 0; i < index; i++) {
             current = current->next;
         }
@@ -218,7 +270,10 @@ int DoublyLinkedList::retrieveAt(int index) {
     }
 }
 
-void DoublyLinkedList::replaceAt(int element, int index) {
+
+
+template<typename T>
+void DoublyLinkedList<T>::replaceAt(T element, int index) {
     if (index == 0) {
         head->val = element;
     }
@@ -226,7 +281,7 @@ void DoublyLinkedList::replaceAt(int element, int index) {
         tail->val = element;
     }
     else {
-        Node* current = head;
+        dNode* current = head;
         for (int i = 0; i < index; i++) {
             current = current->next;
         }
