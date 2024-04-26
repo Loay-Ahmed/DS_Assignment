@@ -13,6 +13,7 @@
 #include "BubbleSort.cpp"
 #include "selection_sort.cpp"
 #include "Queue.cpp"
+#include "countSort.cpp"
 
 using namespace chrono;
 using namespace std;
@@ -35,13 +36,15 @@ pair<int, Student *> readFromFile(basic_ifstream<char> &file) {
 }
 
 // Function to measure running time of sorting algorithms
-template<typename T>
-long long measureTime(void (*sortingAlgorithm)(Student[], int, int), T arr[], int size) {
+template<typename T, typename Comparator>
+long long measureTime(void (*sortingAlgorithm)(Student[], int, int), T arr[], int size, Comparator comp) {
     auto start = high_resolution_clock::now();
     cout << "Just before running the algorithm" << endl;
     sortingAlgorithm(arr, 0, size);
     cout << "Completed the algorithm" << endl;
     auto stop = high_resolution_clock::now();
+    // Sort by GPA
+    std::sort(arr, arr + size, comp);
     auto duration = duration_cast<milliseconds>(stop - start);
     cout << "Duration: " << duration.count() << endl;
     return duration.count();
@@ -61,7 +64,9 @@ void writeToFile(const string &filename, const string &algorithmName, Student *s
     file << endl;
     file.close();
 }
-
+bool compareByGPA(const Student& a, const Student& b) {
+    return a.GPA() > b.GPA();
+}
 
 int main() {
     CircularLinkedList<int> l;
@@ -89,11 +94,12 @@ int main() {
             {"Selection Sort", SelectionSort},
             {"Bubble Sort",    BubbleSort},
             {"Shell Sort",     shellSort},
+            {"Count Sort",     countSort},
             {"Quick Sort",     quickSort}};
     for (const auto &algorithm: sortingAlgorithms) {
         // Sort by name
         Student *studentsByName = students;
-        timeTaken = measureTime(algorithm.second, studentsByName, size);
+        timeTaken = measureTime(algorithm.second, studentsByName, size, less<Student>());
         for (int i = 0; i < size; i++) {
             cout << students[i].Name() << endl;
             cout << students[i].ID() << endl;
@@ -103,7 +109,7 @@ int main() {
 
         // Sort by GPA
         Student *studentsByGPA = students;
-        timeTaken = measureTime(algorithm.second, studentsByGPA, size);
+        timeTaken = measureTime(algorithm.second, studentsByGPA, size, compareByGPA);
         writeToFile("SortedByGPA.txt", algorithm.first, studentsByGPA, size, timeTaken);
         // Implement and call other sorting algorithms
         // You can reuse the existing code structure for other sorting algorithms
@@ -130,5 +136,6 @@ int main() {
     q.clear();
 // Check if queue is empty after clearing
     cout << "Is queue empty after clearing? " << (q.isEmpty() ? "Yes" : "No") << endl;*/
+    delete[] students;
     return 0;
 }
