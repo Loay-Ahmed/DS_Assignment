@@ -18,13 +18,13 @@ pair<int, Student *> readFromFile(basic_ifstream<char> &file) {
     string line, name, id;
     int n;
     double gpa;
-    (file >> n) ? cout << n << endl : cout << "Can't read int";
+    (file >> n) ? cout << "" : cout << "Can't read int" << endl;
     Student students[n];
     for (int i = 0; i < n; i++) {
         file.ignore();
         getline(file, name);
         getline(file, id);
-        (file >> gpa) ? cout << "" : cout << "Can't read double";
+        (file >> gpa) ? cout << "" : cout << "Can't read double" << endl;
         students[i] = Student(name, id, gpa);
     }
     file.close();
@@ -35,9 +35,12 @@ pair<int, Student *> readFromFile(basic_ifstream<char> &file) {
 template<typename T>
 long long measureTime(void (*sortingAlgorithm)(Student[], int, int), T arr[], int size) {
     auto start = high_resolution_clock::now();
+    cout << "Just before running the algorithm" << endl;
     sortingAlgorithm(arr, 0, size);
+    cout << "Completed the algorithm" << endl;
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(stop - start);
+    cout << "Duration: " << duration.count() << endl;
     return duration.count();
 }
 
@@ -72,26 +75,33 @@ int main() {
     long long timeTaken;
 
     // Select and run sorting algorithms
-    vector<string> sortingAlgorithms = {"Insertion Sort", "Selection Sort", "Bubble Sort", "Shell Sort", "Merge Sort",
-                                        "Quick Sort", "Count Sort"};
-    for (const auto &algorithm: sortingAlgorithms) {
-        if (algorithm == "Quick Sort") {
-            // Sort by name
-            Student *studentsByName = students;
-            timeTaken = measureTime(quickSort, studentsByName, size);
-            writeToFile("SortedByName.txt", algorithm, studentsByName, size, timeTaken);
-
-            // Sort by GPA
-            Student *studentsByGPA = students;
-            timeTaken = measureTime(quickSort, studentsByGPA, size);
-            writeToFile("SortedByGPA.txt", algorithm, studentsByGPA, size, timeTaken);
-        } else {
-            // Implement and call other sorting algorithms
-            // You can reuse the existing code structure for other sorting algorithms
-            // Just replace the quickSort function call with the corresponding sorting algorithm
+    vector<std::pair<string, void (*)(Student[], int, int)>> sortingAlgorithms = {
+            {"Insertion Sort", InsertionSort},
+            {"Selection Sort", SelectionSort},
+            {"Bubble Sort",    BubbleSort},
+            {"Shell Sort",     shellSort},
+            {"Quick Sort",     quickSort}};
+    for (const auto& algorithm: sortingAlgorithms) {
+        // Sort by name
+        Student *studentsByName = students;
+        timeTaken = measureTime(algorithm.second, studentsByName, size);
+        for (int i = 0; i < size; i++) {
+            cout << students[i].Name() << endl;
+            cout << students[i].ID() << endl;
+            cout << students[i].GPA() << endl;
         }
+        writeToFile("SortedByName.txt", algorithm.first, studentsByName, size, timeTaken);
+
+        // Sort by GPA
+        Student *studentsByGPA = students;
+        timeTaken = measureTime(algorithm.second, studentsByGPA, size);
+        writeToFile("SortedByGPA.txt", algorithm.first, studentsByGPA, size, timeTaken);
+        // Implement and call other sorting algorithms
+        // You can reuse the existing code structure for other sorting algorithms
+        // Just replace the quickSort function call with the corresponding sorting algorithm
+
     }
-    Queue<int> q;
+    /*Queue<int> q;
 // Enqueue elements
     q.enqueue(10);
     q.enqueue(20);
@@ -110,6 +120,6 @@ int main() {
 // Clear queue
     q.clear();
 // Check if queue is empty after clearing
-    cout << "Is queue empty after clearing? " << (q.isEmpty() ? "Yes" : "No") << endl;
+    cout << "Is queue empty after clearing? " << (q.isEmpty() ? "Yes" : "No") << endl;*/
     return 0;
 }
