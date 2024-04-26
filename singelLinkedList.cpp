@@ -7,13 +7,12 @@ singelLinkedList::singelLinkedList() {
 }
 
 void singelLinkedList::insertAtHead(int element) {
-    Node* newNode = new Node;
+    Node *newNode = new Node;
     newNode->val = element;
     if (length == 0) {
         head = tail = newNode;
         newNode->next = NULL;
-    }
-    else {
+    } else {
         newNode->next = head;
         head = newNode;
     }
@@ -21,13 +20,12 @@ void singelLinkedList::insertAtHead(int element) {
 }
 
 void singelLinkedList::insertAtTail(int element) {
-    Node* newNode = new Node;
+    Node *newNode = new Node;
     newNode->val = element;
     if (length == 0) {
         head = tail = newNode;
         newNode->next = NULL;
-    }
-    else {
+    } else {
         tail->next = newNode;
         tail = newNode;
         newNode->next = NULL;
@@ -38,14 +36,12 @@ void singelLinkedList::insertAtTail(int element) {
 void singelLinkedList::insertAt(int element, int index) {
     if (index == 0) {
         insertAtHead(element);
-    }
-    else if (index == length) {
+    } else if (index == length) {
         insertAtTail(element);
-    }
-    else {
-        Node* newNode = new Node;
+    } else {
+        Node *newNode = new Node;
         newNode->val = element;
-        Node* current = head;
+        Node *current = head;
         for (int i = 1; i < index; i++) {
             current = current->next;
         }
@@ -58,14 +54,12 @@ void singelLinkedList::insertAt(int element, int index) {
 void singelLinkedList::removeAtHead() {
     if (length == 0) {
         cout << "the list is already empty.";
-    }
-    else if (length == 1) {
+    } else if (length == 1) {
         delete head;
         head = tail = NULL;
         length--;
-    }
-    else {
-        Node* current = head;
+    } else {
+        Node *current = head;
         head = head->next;
         delete current;
         length--;
@@ -75,14 +69,12 @@ void singelLinkedList::removeAtHead() {
 void singelLinkedList::removeAtTail() {
     if (length == 0) {
         cout << "the list is already empty.";
-    }
-    else if (length == 1) {
+    } else if (length == 1) {
         delete head;
         head = tail = NULL;
         length--;
-    }
-    else {
-        Node* current = head;
+    } else {
+        Node *current = head;
         while (current->next != tail) {
             current = current->next;
         }
@@ -101,13 +93,11 @@ void singelLinkedList::removeAt(int index) {
 
     if (index == 0) {
         removeAtHead();
-    }
-    else if (index == length) {
+    } else if (index == length) {
         removeAtTail();
-    }
-    else {
-        Node* current = head->next;
-        Node* previos = head;
+    } else {
+        Node *current = head->next;
+        Node *previos = head;
         for (int i = 1; i < index; i++) {
             previos = current;
             current = current->next;
@@ -124,12 +114,10 @@ void singelLinkedList::removeAt(int index) {
 int singelLinkedList::retrieveAt(int index) {
     if (index == 0) {
         return (head->val);
-    }
-    else if (index == length - 1) {
+    } else if (index == length - 1) {
         return (tail->val);
-    }
-    else {
-        Node* current = head;
+    } else {
+        Node *current = head;
         for (int i = 0; i < index; i++) {
             current = current->next;
         }
@@ -140,12 +128,10 @@ int singelLinkedList::retrieveAt(int index) {
 void singelLinkedList::replaceAt(int element, int index) {
     if (index == 0) {
         head->val = element;
-    }
-    else if (index == length - 1) {
+    } else if (index == length - 1) {
         tail->val = element;
-    }
-    else {
-        Node* current = head;
+    } else {
+        Node *current = head;
         for (int i = 0; i < index; i++) {
             current = current->next;
         }
@@ -154,7 +140,7 @@ void singelLinkedList::replaceAt(int element, int index) {
 }
 
 bool singelLinkedList::isExist(int element) {
-    Node* current = head;
+    Node *current = head;
     if (length > 0) {
         while (current->next != NULL) {
             if (current->val == element) {
@@ -162,13 +148,13 @@ bool singelLinkedList::isExist(int element) {
             }
             current = current->next;
         }
-    }
-    else
+    } else
         return false;
+    return false;
 }
 
 bool singelLinkedList::isItemAtEqual(int element, int index) {
-    Node* current = head;
+    Node *current = head;
     int count = -1;
     if (length > 0) {
         while (current != NULL) {
@@ -178,29 +164,33 @@ bool singelLinkedList::isItemAtEqual(int element, int index) {
             current = current->next;
             count++;
         }
-    }
-    else {
+    } else {
         return false;
     }
+    return false;
 }
 
 void singelLinkedList::swap(int firstItemIdx, int secondItemIdx) {
     if (length > 1) {
-        Node* current1 = head;
-        Node* current2 = head;
+        Node *current1 = head;
+        Node *current2 = head;
         for (int i = 0; i < firstItemIdx; i++) {
             current1 = current1->next;
         }
         for (int i = 0; i < secondItemIdx; i++) {
             current2 = current2->next;
         }
-        int* tmp = new int(current1->val);
-        current1->val = current2->val;
-        current2->val = *tmp;
+        Node *prev = head;
+        for (int i = 0; i < firstItemIdx - 1; i++) {
+            prev = prev->next;
+        }
+        Node *tmp = current2->next;
+        current2->next = current1;
+        current1->next = tmp;
+        prev->next = current2;
         delete tmp;
         tmp = nullptr;
-    }
-    else {
+    } else {
         cout << "Can't swap, list is less than 2";
     }
 }
@@ -214,9 +204,9 @@ int singelLinkedList::linkedListSize() {
 }
 
 void singelLinkedList::clear() {
-    Node* current = head;
+    Node *current = head;
     while (current != NULL) {
-        Node* tmp = current;
+        Node *tmp = current;
         current = current->next;
         delete tmp;
     }
@@ -225,7 +215,7 @@ void singelLinkedList::clear() {
 }
 
 void singelLinkedList::print() {
-    Node* current = head;
+    Node *current = head;
     while (current != NULL) {
         cout << current->val << " ";
         current = current->next;

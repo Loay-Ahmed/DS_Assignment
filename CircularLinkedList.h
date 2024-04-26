@@ -1,34 +1,48 @@
-#pragma once
-
+#include <string>
 using namespace std;
-struct Node
-{
-	int val;
-	Node* next;
-};
 
+template<typename T>
+class CircularLinkedList {
 
-class CircularLinkedList
-{
-	Node* head, * tail;
-	int length;
+    struct cirqNode {
+        T val;
+        cirqNode *next;
+    };
 
-	public:
+    cirqNode *tail;
+    int length;
+
+public:
     //Not Tested Yet
-        CircularLinkedList();
-		void insertAtHead(int element) ;
-		void insertAtTail(int element);
-		void insertAt(int element,int index);
-		void removeAtHead();
-		void removeAtTail();
-		void removeAt(int index);
-		int retrieveAt(int index);
-		void replaceAt(int element, int index);
-        bool isExist(int element);
-        bool isItemAtEqual(int element, int index);
-        void swap(int firstItemIdx, int secondItemIdx);
-        bool isEmpty();
-        int linkedListSize();
-        void clear();
-        void print();
+    CircularLinkedList();
+
+    void insertAtHead(const T &element);
+
+    void insertAtTail(const T &element);
+
+    void insertAt(const T &element, int index);
+
+    void removeAtHead();
+
+    void removeAtTail();
+
+    void removeAt(int index);
+
+    T retrieveAt(int index);
+
+    void replaceAt(const T &element, int index);
+
+    bool isExist(const T &element);
+
+    bool isItemAtEqual(const T &element, int index);
+
+    void swap(int firstItemIdx, int secondItemIdx);
+
+    bool isEmpty();
+
+    int linkedListSize();
+
+    void clear();
+
+    void print();
 };

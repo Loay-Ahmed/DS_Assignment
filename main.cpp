@@ -2,6 +2,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include "CircularLinkedList.cpp"
+#include "DoublyLinkedList.cpp"
+#include "singelLinkedList.cpp"
 #include "Student.cpp"
 #include "chrono"
 #include "quickSort.cpp"
@@ -61,6 +64,12 @@ void writeToFile(const string &filename, const string &algorithmName, Student *s
 
 
 int main() {
+    CircularLinkedList<int> l;
+    l.insertAtHead(10);
+    l.insertAt(15, 1);
+    l.insertAtTail(25);
+    l.insertAt(20, 2);
+    l.print();
     string filePath;
     cout << "Enter absolute path for students.txt: ";
     cin >> filePath;
@@ -81,7 +90,7 @@ int main() {
             {"Bubble Sort",    BubbleSort},
             {"Shell Sort",     shellSort},
             {"Quick Sort",     quickSort}};
-    for (const auto& algorithm: sortingAlgorithms) {
+    for (const auto &algorithm: sortingAlgorithms) {
         // Sort by name
         Student *studentsByName = students;
         timeTaken = measureTime(algorithm.second, studentsByName, size);

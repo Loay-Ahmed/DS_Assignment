@@ -1,47 +1,52 @@
 #include "CircularLinkedList.h"
 #include<iostream>
+#include <string>
 
-CircularLinkedList::CircularLinkedList() {
-    head = tail = NULL;
+template<typename T>
+CircularLinkedList<T>::CircularLinkedList() {
+    tail = NULL;
     length = 0;
 }
 
-void CircularLinkedList::insertAtHead(int element) {
-    Node *newNode = new Node;
+template<typename T>
+void CircularLinkedList<T>::insertAtHead(const T &element) {
+    auto *newNode = new cirqNode;
     newNode->val = element;
     if (length == 0) {
-        head = tail = newNode;
-        newNode->next = NULL;
+        tail = newNode;
+        newNode->next = newNode;
     } else {
-        newNode->next = head;
-        head = newNode;
+        newNode->next = tail->next;
+        tail->next = newNode;
     }
     length++;
 }
 
-void CircularLinkedList::insertAtTail(int element) {
-    Node *newNode = new Node;
+template<typename T>
+void CircularLinkedList<T>::insertAtTail(const T &element) {
+    auto *newNode = new cirqNode;
     newNode->val = element;
     if (length == 0) {
-        head = tail = newNode;
-        newNode->next = NULL;
+        tail = newNode;
+        newNode->next = newNode;
     } else {
+        newNode->next = tail->next;
         tail->next = newNode;
         tail = newNode;
-        newNode->next = NULL;
     }
     length++;
 }
 
-void CircularLinkedList::insertAt(int element, int index) {
+template<typename T>
+void CircularLinkedList<T>::insertAt(const T &element, int index) {
     if (index == 0) {
         insertAtHead(element);
     } else if (index == length) {
         insertAtTail(element);
     } else {
-        Node *newNode = new Node;
+        auto *newNode = new cirqNode;
         newNode->val = element;
-        Node *current = head;
+        cirqNode *current = tail->next;
         for (int i = 1; i < index; i++) {
             current = current->next;
         }
@@ -51,73 +56,76 @@ void CircularLinkedList::insertAt(int element, int index) {
     }
 }
 
-void CircularLinkedList::removeAtHead() {
+template<typename T>
+void CircularLinkedList<T>::removeAtHead() {
     if (length == 0) {
         cout << "the list is already empty.";
     } else if (length == 1) {
-        delete head;
-        head = tail = NULL;
+        delete tail;
+        tail = NULL;
         length--;
     } else {
-        Node *current = head;
-        head = head->next;
+        cirqNode *current = tail->next;
+        tail->next = current->next;
         delete current;
         length--;
     }
 }
 
-void CircularLinkedList::removeAtTail() {
+template<typename T>
+void CircularLinkedList<T>::removeAtTail() {
     if (length == 0) {
         cout << "the list is already empty.";
     } else if (length == 1) {
-        delete head;
-        head = tail = NULL;
+        delete tail;
+        tail = NULL;
         length--;
     } else {
-        Node *current = head;
+        cirqNode *current = tail->next;
         while (current->next != tail) {
             current = current->next;
         }
         tail = current;
         current = current->next;
-        tail->next = NULL;
+        tail->next = current->next;
         delete current;
         length--;
     }
 }
 
-void CircularLinkedList::removeAt(int index) {
+template<typename T>
+void CircularLinkedList<T>::removeAt(int index) {
     if (length == 0) {
         cout << "the list is already empty.";
     }
-
     if (index == 0) {
         removeAtHead();
     } else if (index == length) {
         removeAtTail();
     } else {
-        Node *current = head->next;
-        Node *previos = head;
+        cirqNode *previous = tail->next;
+        cirqNode *current = previous->next;
         for (int i = 1; i < index; i++) {
-            previos = current;
+            previous = current;
             current = current->next;
         }
-        previos->next = current->next;
+        previous->next = current->next;
         if (tail == current) {
-            tail = previos;
+            tail = previous;
         }
         delete current;
         length--;
     }
 }
 
-int CircularLinkedList::retrieveAt(int index) {
+template<typename T>
+T CircularLinkedList<T>::retrieveAt(int index) {
     if (index == 0) {
-        return (head->val);
+        return (tail->next->val);
     } else if (index == length - 1) {
         return (tail->val);
     } else {
-        Node *current = head;
+        cirqNode *current = tail->next;
         for (int i = 0; i < index; i++) {
             current = current->next;
         }
@@ -125,13 +133,14 @@ int CircularLinkedList::retrieveAt(int index) {
     }
 }
 
-void CircularLinkedList::replaceAt(int element, int index) {
+template<typename T>
+void CircularLinkedList<T>::replaceAt(const T &element, int index) {
     if (index == 0) {
-        head->val = element;
+        tail->next->val = element;
     } else if (index == length - 1) {
         tail->val = element;
     } else {
-        Node *current = head;
+        cirqNode *current = tail->next;
         for (int i = 0; i < index; i++) {
             current = current->next;
         }
@@ -139,10 +148,11 @@ void CircularLinkedList::replaceAt(int element, int index) {
     }
 }
 
-bool CircularLinkedList::isExist(int element) {
-    Node *current = head;
+template<typename T>
+bool CircularLinkedList<T>::isExist(const T &element) {
+    cirqNode *current = tail->next;
     if (length > 0) {
-        while (current->next != NULL) {
+        while (current->next != tail->next) {
             if (current->val == element) {
                 return true;
             }
@@ -152,25 +162,25 @@ bool CircularLinkedList::isExist(int element) {
     return false;
 }
 
-bool CircularLinkedList::isItemAtEqual(int element, int index) {
-    Node *current = head;
-    int count = -1;
+template<typename T>
+bool CircularLinkedList<T>::isItemAtEqual(const T &element, int index) {
+    cirqNode *current = tail->next;
     if (length > 0) {
         while (current != NULL) {
-            if (index == count && current->val == element) {
+            if (current->val == element) {
                 return true;
             }
             current = current->next;
-            count++;
         }
     }
     return false;
 }
 
-void CircularLinkedList::swap(int firstItemIdx, int secondItemIdx) {
+template<typename T>
+void CircularLinkedList<T>::swap(int firstItemIdx, int secondItemIdx) {
     if (length > 1) {
-        Node *current1 = head;
-        Node *current2 = head;
+        cirqNode *current1 = tail->next;
+        cirqNode *current2 = tail->next;
         for (int i = 0; i < firstItemIdx; i++) {
             current1 = current1->next;
         }
@@ -187,30 +197,29 @@ void CircularLinkedList::swap(int firstItemIdx, int secondItemIdx) {
     }
 }
 
-bool CircularLinkedList::isEmpty() {
-    return (length == 0 && head == NULL && tail == NULL);
+template<typename T>
+bool CircularLinkedList<T>::isEmpty() {
+    return (length == 0 && tail == NULL);
 }
 
-int CircularLinkedList::linkedListSize() {
+template<typename T>
+int CircularLinkedList<T>::linkedListSize() {
     return length;
 }
 
-void CircularLinkedList::clear() {
-    Node *current = head->next;
-    head->next = NULL;
-    while (current != NULL) {
-        Node *tmp = current;
-        current = current->next;
-        delete tmp;
+template<typename T>
+void CircularLinkedList<T>::clear() {
+    while (tail != NULL) {
+        removeAtHead();
     }
-    head = NULL;
-    tail = NULL;
 }
 
-void CircularLinkedList::print() {
-    Node *current = head->next;
-    cout << head->val << " ";
-    while (current != head) {
+template<typename T>
+void CircularLinkedList<T>::print() {
+    cirqNode *current = tail->next;
+    cout << current->val << " ";
+    current = current->next;
+    while (current != tail->next) {
         cout << current->val << " ";
         current = current->next;
     }

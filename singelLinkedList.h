@@ -1,15 +1,13 @@
 #pragma once
 
 using namespace std;
-struct Node
+class singelLinkedList
+{
+    struct Node
 {
 	int val;
 	Node* next;
 };
-
-
-class singelLinkedList
-{
 	Node* head, * tail;
 	int length;
 
