@@ -22,7 +22,7 @@ pair<int, Student *> readFromFile(basic_ifstream<char> &file) {
     int n;
     double gpa;
     (file >> n) ? cout << "" : cout << "Can't read int" << endl;
-    Student students[n];
+    auto* students = new Student[n];
     for (int i = 0; i < n; i++) {
         file.ignore();
         getline(file, name);
