@@ -10,11 +10,11 @@ class Student {
     string name;
     double gpa;
 public:
-    explicit Student(string Name = "", string ID = "", double GPA = 0);
+    explicit Student(string name = "", string id = "", double gpa = 0);
 
-    string Name() const;
+    string Name();
 
-    string ID() const;
+    string ID();
 
     double GPA() const;
 

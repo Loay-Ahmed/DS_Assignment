@@ -2,13 +2,14 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "Student.h"
+#include "Student.cpp"
 #include "chrono"
 #include "quickSort.cpp"
 #include "insertionSort.cpp"
 #include "ShellSort.cpp"
 #include "BubbleSort.cpp"
 #include "selection_sort.cpp"
+#include "Queue.cpp"
 
 using namespace chrono;
 using namespace std;
@@ -26,6 +27,7 @@ pair<int, Student *> readFromFile(basic_ifstream<char> &file) {
         (file >> gpa) ? cout << "" : cout << "Can't read double";
         students[i] = Student(name, id, gpa);
     }
+    file.close();
     return {n, students};
 }
 
@@ -40,7 +42,7 @@ long long measureTime(void (*sortingAlgorithm)(Student[], int, int), T arr[], in
 }
 
 // Function to write sorting results to file
-void writeToFile(const string &filename, const string &algorithmName, const Student *students, int size,
+void writeToFile(const string &filename, const string &algorithmName, Student *students, int size,
                  long long timeTaken) {
     ofstream file(filename, ios_base::app);
     file << "Algorithm: " << algorithmName << endl;
@@ -67,7 +69,6 @@ int main() {
     pair<int, Student *> pair = readFromFile(file);
     int size = pair.first;
     Student *students = pair.second;
-    Student *studentsByName = students;
     long long timeTaken;
 
     // Select and run sorting algorithms
@@ -76,13 +77,13 @@ int main() {
     for (const auto &algorithm: sortingAlgorithms) {
         if (algorithm == "Quick Sort") {
             // Sort by name
-            studentsByName = students;
-            timeTaken = measureTime(BubbleSort, studentsByName, size);
+            Student *studentsByName = students;
+            timeTaken = measureTime(quickSort, studentsByName, size);
             writeToFile("SortedByName.txt", algorithm, studentsByName, size, timeTaken);
 
             // Sort by GPA
             Student *studentsByGPA = students;
-            timeTaken = measureTime(InsertionSort, studentsByGPA, size);
+            timeTaken = measureTime(quickSort, studentsByGPA, size);
             writeToFile("SortedByGPA.txt", algorithm, studentsByGPA, size, timeTaken);
         } else {
             // Implement and call other sorting algorithms
@@ -90,5 +91,25 @@ int main() {
             // Just replace the quickSort function call with the corresponding sorting algorithm
         }
     }
+    Queue<int> q;
+// Enqueue elements
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+// Print queue
+    q.print();
+// Dequeue elements
+    cout << "Dequeued element: " << q.dequeue() << endl;
+    cout << "Dequeued element: " << q.dequeue() << endl;
+// Print queue
+    q.print();
+// Check first element
+    cout << "First element: " << q.first() << endl;
+// Check if queue is empty
+    cout << "Is queue empty? " << (q.isEmpty() ? "Yes" : "No") << endl;
+// Clear queue
+    q.clear();
+// Check if queue is empty after clearing
+    cout << "Is queue empty after clearing? " << (q.isEmpty() ? "Yes" : "No") << endl;
     return 0;
 }

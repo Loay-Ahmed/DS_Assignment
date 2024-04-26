@@ -2,17 +2,17 @@
 
 #include <utility>
 
-Student::Student(string Name, string ID, double GPA) : name(std::move(Name)), id(std::move(ID)), gpa(GPA) {}
+Student::Student(string name, string id, double gpa) : name(std::move(name)), id(std::move(id)), gpa(gpa) {}
 
 bool Student::operator<(const Student &other) const {
-    return false;
+    return this->name < other.name;
 }
 
-string Student::Name() const {
+string Student::Name() {
     return this->name;
 }
 
-string Student::ID() const {
+string Student::ID() {
     return id;
 }
 
